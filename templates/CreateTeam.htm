@@ -1,0 +1,38 @@
+<html>
+<head>
+<title>Create a Team</title>
+<link rel="stylesheet" type="text/css" href="./stylesheets/Style.css" />
+</head>
+
+<body>
+	<div id="pageTitle">Football Manager</div>
+	
+	<div class="sectionHeader">Game Overview</div>
+	<div>
+			Football Manager is a free online multiplayer soccer
+			management game on facebook. Choose your squad, set tactics and make
+			player transfers between matches. Compete in league and cup
+			competitions against other managers and friends.
+	</div>
+	<div class="contentDivider"></div>
+
+	<div class="sectionHeader">Create a Team</div>
+	<div class="createContent">
+		<form name="createTeam" action="/GenerateNewTeam" method="post">
+			<div class="formBlock">
+				<div class="formRow">
+					<div class="formLabel">Team name:</div>
+					<div class="formItem"><input type="text" name="teamName" /></div>
+				</div>
+				<div class="formRow">
+					<div class="formLabel">Stadium name:</div>
+					<div class="formItem"><input type="text" name="stadiumName" /></div>
+				</div>
+				<div class="formRow">
+					<input type="submit" value="Create Team" />
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

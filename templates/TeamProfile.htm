@@ -1,0 +1,351 @@
+<html>
+<head>
+<title>Team management</title>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../stylesheets/Style.css" />
+<link rel="stylesheet" type="text/css" href="../stylesheets/Tabs.css" />
+<script type="text/javascript" src="../javascript/Tabs.js"></script>
+</head>
+
+<body>
+	<div id="pageTitle">Team management - {{ myteam.teamName }}</div>
+	
+	{% if pendingChallenges == True %}
+		<div class="alertBox">
+			Some of your friends have challenged you to a match!<br />Click the "Matches" tab to accept the challenges!
+		</div>
+	{% endif %}
+
+	<div id="wrapper">
+	
+		<ul class="tabs">
+        	<li><a href="javascript:void(0)" class="defaulttab" rel="Players">Players</a></li>
+        	<li><a href="javascript:void(0)" rel="Staff">Staff</a></li>
+        	<li><a href="javascript:void(0)" rel="Training">Training</a></li>
+        	<li><a href="javascript:void(0)" rel="Matches">Matches</a></li>
+        	<li><a href="javascript:void(0)" rel="Help">Manual</a></li>
+    	</ul>
+    
+    	<div class="tab-content" id="Players">
+			<div id="playerProfile">
+				{% for player in players %}
+					<div class="sectionHeader">
+						{{ player.playerNumber }}: {{ player.firstName }} {{ player.lastName }}
+					</div>
+		
+					<div class="indentedBlock">
+						Player has {{ player.experience }} experience and {{ player.stamina }} stamina.
+					</div>
+		
+					<br/>
+		
+					<div class="dataBlock">
+						<div class="dataRowTwoCols">
+							<div class="dataLabel">Attacking:</div>
+							<div class="dataItem">{{ player.attacking }}</div>
+							<div class="dataLabel">Defending:</div>
+							<div class="dataItem">{{ player.defending }}</div>
+						</div>
+						<div class="dataRowTwoCols">
+							<div class="dataLabel">Footwork:</div>
+							<div class="dataItem">{{ player.footwork }}</div>
+							<div class="dataLabel">Crossing:</div>
+							<div class="dataItem">{{ player.crossing }}</div>
+						</div>
+						<div class="dataRowTwoCols">
+							<div class="dataLabel">Passing:</div>
+							<div class="dataItem">{{ player.passing }}</div>
+							<div class="dataLabel">Strength:</div>
+							<div class="dataItem">{{ player.strength }}</div>
+						</div>
+						<div class="dataRowTwoCols">
+							<div class="dataLabel">Goalkeeping:</div>
+							<div class="dataItem">{{ player.goalkeeping }}</div>
+						</div>
+					</div>
+					<div class="contentDivider"></div>
+				{% endfor %}
+			</div>
+		</div>
+	
+		<div class="tab-content" id="Staff">
+			<div id="staffProfile">
+				{% for staffMember in staff %}
+					<div class="sectionHeader">
+						{{ staffMember.role }}
+					</div>
+					
+					<div class="indentedBlock">
+						Upgrades enable a higher success rate for the '{{ staffMember.firstAttr }}' 
+						{% if staffMember.secondAttr != None %} and '{{ staffMember.secondAttr }}' player attributes. 
+						{% else %} player attribute. {% endif %}
+					</div>
+					
+					<br/>
+					
+					<div class="dataBlock">
+						<div class="dataRowOneCol">
+							<div class="dataLabel">Current Level:</div>
+							<div class="dataItem">{{ staffMember.level }}</div>
+						</div>
+						
+						<div class="dataRowOneCol">
+							<div class="dataLabel">Upgrade To Level:</div>
+							<div class="dataItem">{{ staffMember.level+1 }}</div>
+						</div>
+					
+						<br/>
+						
+						<div class="dataRowOneCol">
+							<div class="dataLabel">Budget:</div>
+							{% for team in teams %}
+								<div class="dataItem">{{ team.budget }}</div>
+							{% endfor %}
+						</div>
+					
+						<div class="dataRowOneCol">
+							<div class="dataLabel">Upgrade Cost:</div>
+							<div class="dataItem">{{ staffMember.upgradeCosts[staffMember.level-1] }}</div>
+						</div>
+						
+						<br/>
+						
+						<div class="dataRowOneCol">
+    						<form name="Upgrade" action="/Upgrade" method="post">
+    							<input type="hidden" name="staffRole" value="{{ staffMember.role }}" />
+    							<input type="submit" value="Upgrade" />
+    						</form>
+    					</div>
+					</div>
+					
+    				<div class="contentDivider"></div>
+    						
+				{% endfor %}
+			</div>
+		
+		</div>
+	
+    	<div class="tab-content" id="Training">
+    		<div id="trainingProfile">
+    			{% for trainingType in trainingTypes %}
+    				<div class="sectionHeader">
+    					{{ trainingType.type }}
+    				</div>
+    				
+    				<div class="dataBlock">
+    				   	<div class="dataRowOneCol">
+    						<div class="dataLabel">Status:</div>
+							<div class="dataItem">{{ trainingType.status }}</div>
+    					</div>
+    					
+    					{% if trainingType.status == 'In session' %}
+    						<div class="dataRowOneCol">
+								<div class="dataLabel">Start Time:</div>
+    							<div class="dataItem">{{ trainingType.startTime }}</div>
+    						</div>
+    						<div class="dataRowOneCol">
+    							<div class="dataLabel">End Time:</div>
+    							<div class="dataItem">{{ trainingType.endTime }}</div>
+    						</div>
+    						<br/>
+    					{% endif %}
+    					
+    					<div class="dataRowOneCol">
+    						<div class="dataLabel">Primary:</div>
+							<div class="dataItem">{{ trainingType.primaryAttr }}</div>
+    					</div>
+    					
+    					{% if trainingType.secondaryAttr != None %}
+    						<div class="dataRowOneCol">
+    							<div class="dataLabel">Secondary:</div>
+								<div class="dataItem">{{ trainingType.secondaryAttr }}</div>
+    						</div>
+    					{% endif %}
+    					
+    					{% if trainingType.tertiaryAttr != None %}
+    						<div class="dataRowOneCol">
+    							<div class="dataLabel">Tertiary:</div>
+								<div class="dataItem">{{ trainingType.tertiaryAttr }}</div>
+    						</div>
+    					{% endif %}
+    					
+    					{% if trainingInProgress == False %}
+    						<br/>
+    						<div class="dataRowOneCol">
+    							<form name="Training" action="/Training" method="post">
+    								<input type="hidden" name="trainingType" value="{{ trainingType.type }}" />
+    								<input type="submit" value="Start Training" />
+    							</form>
+    						</div>
+    					{% endif %}
+    				</div>
+    				<div class="contentDivider"></div>
+    			{% endfor %}
+    		</div>
+    	</div>
+	
+	
+		<div class="tab-content" id="Matches">
+			<div class="matchList">
+				<div class="sectionHeader">
+					Upcoming Matches
+				</div>
+				{% if upcomingMatches|length == 0 %}
+					<div class="matchItem">There are no upcoming matches.</div>
+				{% endif %}
+				{% for match in upcomingMatches %}
+					<div class="matchItem">
+						{% if match.homeTeam == myteam.userId %}
+							<b>{{ match.homeTeamName }}</b> - {{ match.awayTeamName }}
+						{% else %}
+							{{ match.homeTeamName }} - <b>{{ match.awayTeamName }}</b>
+						{% endif %}
+					</div>
+				{% endfor %}
+			</div>
+			<div class="contentDivider"></div>
+			
+			<div class="matchList">
+				<div class="sectionHeader">
+					Past Matches
+				</div>
+				{% if pastMatches | length == 0 %}
+					<div class="matchItem">There have been no matches played.</div>
+				{% endif %}
+				{% for match in pastMatches %}
+					<div class="matchItem">
+						{% if match.homeTeam == myteam.userId %}
+							<b>{{ match.homeTeamName }}</b> {{ match.homeScore }} - {{ match.awayScore }} {{ match.awayTeamName }}
+						{% else %}
+							{{ match.homeTeamName }} {{ match.homeScore }} - {{ match.awayScore }} <b>{{ match.awayTeamName }}</b>
+						{% endif %}	
+						
+					</div>
+				{% endfor %}
+			</div>
+			<div class="contentDivider"></div>
+			
+			<div class="matchList">
+				<div class="sectionHeader">
+					Challenge a friend
+				</div>
+				<div class="formBlock">
+					<form name="createTeam" action="/ChallengeFriend" method="post">
+						<div class="formRow">
+							<div class="formLabel">Friend ID:</div>
+							<div class="formItem"><input type="text" name="friendId" /></div>
+						</div>
+						<div class="formRow">
+							<input type="submit" value="Challenge!" />
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="contentDivider"></div>
+		</div>
+		
+		<div class="tab-content" id="Help">
+			<div class="sectionHeader">
+				What is Football Manager?
+			</div>
+			<div class="paragraphContent">
+				Football Manager is a free online multiplayer soccer
+				management game on Facebook. Choose your squad, set tactics and make
+				player transfers between matches. Compete in league and cup
+				competitions against other managers and friends. Train your team to become
+				the best in the world!
+			</div>
+			<div class="contentDivider"></div>
+			
+			<div class="sectionHeader">
+				Players
+			</div>
+			<div class="paragraphContent">
+				The most important part about your football club is the players on the field that
+				play and win matches for you. When you create a new football club, you are
+				automatically assigned 16 players. Each player has a series of attributes that are
+				described below (see "Player Attributes"), and players can get improve their skills
+				when you put them through some rigorous training (see "Training" below).
+			</div>
+			<div class="contentDivider"></div>
+			
+			<div class="sectionHeader">
+				Player Attributes
+			</div>
+			<div class="paragraphContent">
+				Below is the list of attributes each player has.
+				<ul>
+					<li><b>Passing</b> - This includes the ability to accurately pass the ball to a
+					teammate as well as the vision and intelligence to pick out a good pass for a
+					teammate.</li>
+					<li><b>Crossing</b> - This is the ability to pick out a teammate near the goal
+					and deliver an accurate cross to them.</li>
+					<li><b>Footwork</b> - This is the player's ability to run past an opponent with
+					the ball. It includes skills such as ball control, agility, and speed.</li>
+					<li><b>Attacking</b> - This includes the ability to shoot the ball well while
+					keeping one's composure when under pressure from defenders. This also includes
+					the ability to make intelligent runs off the ball or be in good positions to
+					contribute to team attacks.</li>
+					<li><b>Defending</b> - This includes the ability to accurately take the ball away
+					from opponents or pressure them into making a mistake and losing the ball. This
+					also includes the ability to read and predict the movements of opposing attackers
+					and be in good defensive positions to nullify opponent attacks.</li>
+					<li><b>Goalkeeping</b> - This includes the ability to position oneself to prevent
+					the opposition from scoring easily. This also includes the ability to read the
+					game from the attackers' point of view and react accordingly.</li>
+					<li><b>Experience</b> - Experience helps players be able to make better choices
+					during a game.</li>
+					<li><b>Strength</b> - This ability helps attackers hold onto the ball when under
+					pressure from defenders as well as be able to shoot the ball harder. This ability
+					helps defender steal the ball from attackers more easily.</li>
+					<li><b>Stamina</b> - The more stamina a player has, the longer they can run and
+					play at a normal level.</li>
+					<li><b>Experience</b> - Experience helps players be able to make better choices
+					during a game.</li>
+				</ul>
+			</div>
+			<div class="contentDivider"></div>
+			
+			<div class="sectionHeader">
+				Matches
+			</div>
+			<div class="paragraphContent">
+				Matches are where your team is pitted against teams owned by other people on Facebook.
+				You may be challenged by your friends on Facebook, or you may challenge them! A list
+				of your past and upcoming matches can be found on in the "Matches" section of the
+				app, and you can also challenge all of your Facebook friends to a match in this
+				section. If a friend challenges you to a match, you can accept their challenge in
+				this section, too.
+			</div>
+			<div class="contentDivider"></div>
+			
+			<div class="sectionHeader">
+				Training
+			</div>
+			<div class="paragraphContent">
+				There are eight training categories: dribbling, striking, teamwork, set-pieces,
+				marking/tackling, strength, cardio, and goalkeeping. Each category contains one or
+				more (primary, secondary, tertiary) trained player attributes. The primary, secondary,
+				and tertiary attributes of a player will increase by 3, 2, and 1 upon a training
+				success, respectively. However, note that each attribute is also trained individually,
+				so it is possible, for example, to have training for the primary attribute succeed,
+				and training for the secondary attribute to fail. In addition, each player on the
+				team is trained individually, so the stat increases for each player can be different.
+			</div>
+			<br />
+			<div class="paragraphContent">
+				Click "Start Training" to start a new training session for a particular category. Each
+				training session takes exactly 5 hours to complete. During this time, no other training
+				sessions can be started. When the time is up, refreshing will enable the page to return
+				to its original state, and new training sessions can then be started.
+			</div>
+			<div class="contentDivider"></div>
+			
+		</div>
+		
+		
+		
+	</div>
+	
+</body>
+</html>

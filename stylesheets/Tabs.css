@@ -1,0 +1,44 @@
+#wrapper {
+    width:800px;
+}
+
+ul.tabs {
+    width:800px;
+    margin:0;
+    padding:0;
+}
+
+ul.tabs li {
+    display:block;
+    float:left;
+    padding:0 5px;
+}
+
+ul.tabs li a {
+	width:50px;
+    display:block;
+    float:left;
+    padding:5px;
+    font-size:0.8em;
+    background-color:#d8dfea;
+    color:#666;
+    text-decoration:none;
+    text-align:center;
+}
+
+ul.tabs li a:hover
+{
+    background-color: #3b5998;
+    color: #ffffff;
+    cursor: hand;
+}
+
+.selected {
+    font-weight:bold;
+}
+
+.tab-content {
+    clear:both;
+    border:1px solid #ddd;
+    padding:10px;
+}

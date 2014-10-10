@@ -1,0 +1,91 @@
+body {
+	width: 800px;
+	margin: 0px auto;
+	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+	font-size: 11px;
+	color: #333333;
+}
+
+#pageTitle {
+	font-size: 21px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.alertBox {
+    background-color: #fff9d7;  
+    border: 1px solid #e2c822;  
+    color: #333333;  
+    padding: 10px;  
+    font-size: 13px;  
+    font-weight: bold;  
+    width: 780px;
+    margin-bottom: 20px;
+}
+
+.sectionHeader {
+    padding: 3px;
+    padding-left: 5px;
+    background-color: #d8dfea;
+    color: #3b5998;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-variant: small-caps;
+}
+
+.indentedBlock {
+	margin-left: 20px;
+}
+
+.contentDivider {
+    margin-top: 15px;  
+    margin-bottom: 20px;  
+    height: 1px;  
+    background-color: #d8dfea;  
+}
+
+.dataBlock {
+	overflow: auto;
+}
+
+.dataRowTwoCols {
+	text-align: left;
+	width: 400px;
+}
+
+.dataRowOneCol {
+	text-align: left;
+	width: 200px;	
+}
+
+.dataLabel {
+	font-weight: bold;
+	width: 110px;
+	float: left;
+}
+
+.dataItem {
+	width: 90px;
+	float: left;
+}
+
+.formBlock {
+	margin-bottom: 60px;
+}
+
+.formRow {
+	text-align: left;
+	width: 300px
+}
+
+.formLabel {
+	font-weight: bold;
+	width: 100px;
+	float: left;
+}
+
+.formEntry {
+	width: 200px;
+	float: left;
+}

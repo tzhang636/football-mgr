@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>Team management</title>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../stylesheets/Style.css" />
+<link rel="stylesheet" type="text/css" href="../stylesheets/Tabs.css" />
+<script type="text/javascript" src="../javascript/Tabs.js"></script>
+</head>
+
+<body>
+
+	<div id="header">
+		<h1>FOOTBALL MANAGER</h1>
+		<h3>footballmanager.com</h3>
+	</div>
+
+	<div id="center">
+
+		<div id="links">
+			<!-- Link back to team profile -->
+		</div>
+
+		<div id="result">
+			Training Result: {{ result }} <br /> {% for player in players %}
+			Name: <b>{{ player.firstName }} {{ player.lastName }}</b><br />
+			Updated Statistics:
+			<ul>
+				<li>Passing: {{ player.passing }}</li>
+				<li>Crossing: {{ player.crossing }}</li>
+				<li>Footwork: {{ player.footwork }}</li>
+				<li>Attacking: {{ player.attacking }}</li>
+				<li>Defending: {{ player.defending }}</li>
+				<li>Strength: {{ player.strength }}</li>
+				<li>Stamina: {{ player.stamina }}</li>
+				<li>Experience: {{ player.experience }}</li>
+				<li>Goalkeeping: {{ player.goalkeeping }}</li>
+			</ul>
+			{% endfor %}
+		</div>
+
+	</div>
+
+</body>
+</html>
